@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { data } from "../fetchDataAPI/testData";
 
 export const fetchTable = createAsyncThunk(
     "dataTable/fetchTable",
@@ -17,12 +18,13 @@ export const fetchTable = createAsyncThunk(
 
 export const tableSlice = createSlice({
     name: "dataTable",
-    initialState: {},
+    initialState: {
+        data: []
+    },
     reducers: {},
     extraReducers: {
-        [fetchTable.fulfield]: (state, action) => {
-            console.log(state);
-            return action.payload
+        [fetchTable.fulfilled]: (state, action) => {
+            state.data.push(action.payload)
         }
     }
 })
