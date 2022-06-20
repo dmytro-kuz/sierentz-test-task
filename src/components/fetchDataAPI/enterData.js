@@ -1,4 +1,4 @@
-export const data = {
+export const enterData = {
   Kyivska: {
     G: {
       2017: {
