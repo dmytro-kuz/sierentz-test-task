@@ -23,7 +23,7 @@ export default function PopupPage() {
   const style3 = { color: "white", width: "100px" };
 
   const [data, setData] = useState(defaultValues);
-  const [value, setValue] = useState(defaultValues[defaultValues.length - 1].value + 1);
+  const [value, setValue] = useState(+defaultValues[defaultValues.length - 1].value + 1);
   const [date, setDate] = useState(getTodayDate());
   const [user, setUser] = useState("Petro");
   const [comment, setComment] = useState("");
@@ -33,7 +33,7 @@ export default function PopupPage() {
       ...data,
       { value, date, user, comment},
     ]);
-    setValue(prevValue => prevValue + 1);
+    setValue(prevValue => +prevValue + 1);
     setDate(getTodayDate());
     setUser("Petro");
     setComment("");
