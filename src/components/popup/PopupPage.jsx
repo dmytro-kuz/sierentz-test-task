@@ -1,5 +1,7 @@
 import React from "react";
 import { useState } from "react";
+import { getTodayDate } from "./getDate/getTodayDate.js";
+import { defaultValues } from "./defaultValues/defaultValues.js";
 import {
   Table,
   TableContainer,
@@ -12,8 +14,6 @@ import {
   Autocomplete,
   Button,
   ButtonGroup,
-  Box,
-  Input,
 } from "@mui/material";
 import uniqid from "uniqid";
 
@@ -21,62 +21,42 @@ export default function PopupPage() {
   const style1 = { color: "white", fontSize: 20 };
   const style2 = { color: "white" };
   const style3 = { color: "white", width: "100px" };
-  const defaultValues = [
-    { value: 4, date: "20.02.2022", user: "Petro", comment: "any" },
-    { value: 5, date: "21.02.2022", user: "Roman", comment: "Lorem ipsum" },
-    {
-      value: 6,
-      date: "22.02.2022",
-      user: "Anna",
-      comment: "Lorem ipsum dolor ami rent",
-    },
-  ];
-
-  const todayYear = () => {
-    const todayDate = new Date();
-    const todayYear = todayDate.getFullYear();
-    const todayMonth =
-      todayDate.getMonth() < 10
-        ? "0" + todayDate.getMonth()
-        : todayDate.getMonth();
-    const todayDay =
-      todayDate.getDay() < 10 ? "0" + todayDate.getDay() : todayDate.getDay();
-    return `${todayYear}-${todayDay}-${todayMonth}`;
-  };
 
   const [data, setData] = useState(defaultValues);
-  const [value, setValue] = useState("");
-  const [date, setDate] = useState(todayYear());
-  const [user, setUser] = useState("Default User");
+  const [value, setValue] = useState(defaultValues[defaultValues.length - 1].value + 1);
+  const [date, setDate] = useState(getTodayDate());
+  const [user, setUser] = useState("Petro");
   const [comment, setComment] = useState("");
 
   const handleAdd = () => {
-    setData([...data, {value: value, date: date, user: user, comment: comment}])
-    console.log(data);
+    setData([
+      ...data,
+      { value, date, user, comment},
+    ]);
+    setValue(prevValue => prevValue + 1);
+    setDate(getTodayDate());
+    setUser("Petro");
+    setComment("");
   };
 
   const handleValue = (e) => {
     setValue(e.target.value);
-    // console.log(e.target.value);
   };
 
   const handleComment = (e) => {
     setComment(e.target.value);
-    // console.log(e.target.value);
   };
 
   const handleDate = (e) => {
     setDate(e.target.value);
-    // console.log(e.target.value);
   };
 
   const handleUser = (e) => {
     setUser(e.target.textContent);
-    // console.log(e.target.textContent);
   };
 
   return (
-    <Box>
+    <>
       <h2>Popup Page</h2>
       <TableContainer
         sx={{
@@ -130,8 +110,9 @@ export default function PopupPage() {
             ))}
             <TableRow>
               <TableCell key={uniqid()}>
-                <Input
-                required
+                <TextField
+                  sx={{ width: 125 }}
+                  required
                   onBlur={handleValue}
                   defaultValue={value}
                   placeholder='Enter value'
@@ -159,11 +140,11 @@ export default function PopupPage() {
                 />
               </TableCell>
               <TableCell key={uniqid()}>
-                <Input
-                required
+                <TextField
+                  required
                   onBlur={handleComment}
                   defaultValue={comment}
-                  placeholder='Enter value'
+                  placeholder='Enter Comment'
                 />
               </TableCell>
             </TableRow>
@@ -176,6 +157,7 @@ export default function PopupPage() {
             <Button
               sx={{ m: 5, background: "green", color: "white", width: "100px" }}
               key='one'
+              type="submit"
               onClick={handleAdd}>
               Add
             </Button>,
@@ -188,6 +170,6 @@ export default function PopupPage() {
           ]}
         </ButtonGroup>
       </TableContainer>
-    </Box>
+      </>
   );
 }
