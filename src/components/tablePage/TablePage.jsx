@@ -32,7 +32,7 @@ export default function TablePage() {
   const handleWindow = (e) => {
     const cell = e.target.textContent;
     if (cell !== "Kyivska" && cell !== "Odeska" && cell !== "Lvivska") {
-      const params = `width=1000,height=500`;
+      const params = `width=1100,height=500`;
       window.open("../popup", "_blank", params);
     }
   };
